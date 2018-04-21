@@ -1,4 +1,5 @@
 #include "TicTacToeBoard.h"
+#include <iostream>
 /**
  * Class for representing a 3x3 Tic-Tac-Toe game board, using the Piece enum
  * to represent the spaces on the board.
@@ -8,9 +9,11 @@
 TicTacToeBoard::TicTacToeBoard()
 {
   turn = X;
+  gameOver = false;
   for(int i=0; i<BOARDSIZE; i++)
     for(int j=0; j<BOARDSIZE; j++)
       board[i][j] = Blank;
+
 }
 
 /**
@@ -19,7 +22,13 @@ TicTacToeBoard::TicTacToeBoard()
 **/
 Piece TicTacToeBoard::toggleTurn()
 {
-  return Invalid;
+  if (turn == X){
+    turn = O;
+    return turn;
+  }
+  turn = X;
+  return turn;
+  //return Invalid;
 }
 
 /**
@@ -33,7 +42,43 @@ Piece TicTacToeBoard::toggleTurn()
 **/ 
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
-  return Invalid;
+  if (gameOver == true){
+    return Invalid;
+  }
+  
+  if (row > 2 || row < 0 || column > 2 || column < 0){
+    return Invalid;
+  }
+  
+  if (board[row][column] != Blank){
+    return board[row][column];
+  }
+    
+  board[row][column] = turn;
+
+  for (int n = 0; n < 3; n++){
+    if (board[n][0] == turn && board[n][1] == turn && board[n][2] == turn){
+      gameOver = true;
+    }
+  }
+  for (int n = 0; n < 3; n++){
+    if (board[0][n] == turn && board[1][n] == turn && board[2][n] == turn){
+      gameOver = true;
+    }
+  }
+  if (board[0][0] == turn && board[1][1] == turn && board[2][2] == turn){
+    gameOver = true;
+  }
+  if (board[2][0] == turn && board[1][1] == turn && board[0][2] == turn){
+    gameOver = true;
+  }
+  
+  
+  if (gameOver == false){
+    toggleTurn();
+  }
+    
+  return board[row][column];
 }
 
 /**
@@ -42,7 +87,11 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
-  return Invalid;
+  if (row > 2 || row < 0 || column > 2 || column < 0){
+    return Invalid;
+  }
+  return board[row][column];
+  
 }
 
 /**
@@ -51,5 +100,19 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
+  if (gameOver == true){
+    return turn;
+  }
+  int a = 0;
+  for(int i=0; i<BOARDSIZE; i++){
+    for(int j=0; j<BOARDSIZE; j++){
+      if (board[i][j] == Blank){
+        a = 1;
+      }
+    }
+  }
+  if (a == 0){
+    return Blank;
+  }
   return Invalid;
 }

@@ -20,6 +20,7 @@ class TicTacToeBoard
   private:
   	Piece board[BOARDSIZE][BOARDSIZE];
   	Piece turn;
+  	bool gameOver;
 
   public:
   	//Constructor sets an empty board and specifies it is X's turn first
