@@ -62,15 +62,32 @@ TEST(TicTacToeBoardTest, GetPiece)
 	ASSERT_TRUE( ttt.getPiece(0,0) == X );
 }
 
+TEST(TicTacToeBoardTest, GetPieceOutOfBounds)
+{
+	TicTacToeBoard ttt;
+	ttt.placePiece(-1,0); //X
+	ASSERT_FALSE( ttt.getPiece(-1,0) == X );
+}
 
 TEST(TicTacToeBoardTest, WinnerX)
 {
 	TicTacToeBoard ttt;
 	ttt.placePiece(0,0); //X
 	ttt.placePiece(0,1); //O
-	ttt.placePiece(1,0); //X 
+	ttt.placePiece(1,0); //X
 	ttt.placePiece(1,1); //O
 	ttt.placePiece(2,0); //X
+	ASSERT_TRUE( ttt.getWinner() == X );
+}
+
+TEST(TicTacToeBoardTest, WinnerVertical)
+{
+	TicTacToeBoard ttt;
+	ttt.placePiece(0,0); //X
+	ttt.placePiece(1,0); //O
+	ttt.placePiece(0,1); //X 
+	ttt.placePiece(2,0); //O
+	ttt.placePiece(0,2); //X
 	ASSERT_TRUE( ttt.getWinner() == X );
 }
 
@@ -92,12 +109,25 @@ TEST(TicTacToeBoardTest, DiagonalWin)
 {
 	TicTacToeBoard ttt;
 	ttt.placePiece(0,0); //X
-	ttt.placePiece(0,1); //O
-	ttt.placePiece(1,1); //X 
-	ttt.placePiece(1,2); //O
+	ttt.placePiece(2,0); //O
+	ttt.placePiece(1,0); //X 
+	ttt.placePiece(1,1); //O
 	ttt.placePiece(2,2); //X
+	ttt.placePiece(0,2); //O
+	ASSERT_TRUE( ttt.getWinner() == O );
+}
+
+TEST(TicTacToeBoardTest, WinnerDiagonalRightToLeft)
+{
+	TicTacToeBoard ttt;
+	ttt.placePiece(0,0); //X
+	ttt.placePiece(1,0); //O
+	ttt.placePiece(0,1); //X 
+	ttt.placePiece(2,0); //O
+	ttt.placePiece(0,2); //X
 	ASSERT_TRUE( ttt.getWinner() == X );
 }
+
 
 
 TEST(TicTacToeBoardTest, FilledBoardNoWinner)
