@@ -27,6 +27,13 @@ TEST(TicTacToeBoardTest, PlaceOutOfBounds)
 	ASSERT_TRUE( ttt.placePiece(4,-1) == Invalid );
 }
 
+TEST(TicTacToeBoardTest, PlaceOutOfBounds2)
+{
+	TicTacToeBoard ttt;
+	ASSERT_TRUE( ttt.placePiece(1,-10) == Invalid );
+}
+
+
 TEST(TicTacToeBoardTest, GetOutOfBounds)
 {
 	TicTacToeBoard ttt;
